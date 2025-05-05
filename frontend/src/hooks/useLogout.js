@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./useAuthContext";
+import { useWorkoutsContext } from "./useWorkoutContext";
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
+  const { dispatch: workoutsDispatch } = useWorkoutsContext();
   const history = useNavigate();
 
   const logout = () => {
@@ -11,6 +13,7 @@ export const useLogout = () => {
 
     // dispatch logout action
     dispatch({type: 'LOGOUT'});
+    workoutsDispatch({type: 'SET_WORKOUTS', payload: null})
     history('/login');
   }
 
