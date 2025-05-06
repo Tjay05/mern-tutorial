@@ -8,7 +8,7 @@ export const useLogout = () => {
   const history = useNavigate();
 
   const logout = () => {
-    // remove user from storage
+    // remove user from local storage
     localStorage.removeItem('user');
 
     // dispatch logout action
