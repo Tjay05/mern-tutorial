@@ -120,6 +120,7 @@ nav button {
   font-style: 1em;
   margin-left: 10px;
 }
+
 /* auth forms */
 form.signup, form.login {
   max-width: 400px;
