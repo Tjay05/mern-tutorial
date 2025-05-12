@@ -27,7 +27,6 @@ const getWorkout = async (req, res) => {
   res.status(200).json(workout);
 }
 
-
 // create new workout
 const createWorkout = async (req, res) => {
   const { title, load, reps } = req.body
