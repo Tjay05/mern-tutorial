@@ -1,5 +1,4 @@
 {
-  "proxy": "https://mern-tutorial-zpvg.onrender.com",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
