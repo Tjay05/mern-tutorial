@@ -9,12 +9,23 @@ const userRoutes = require('./routes/user');
 // express app
 const app = express();
 
+const allowedOrigins = [
+  'https://mern-workout-budyy.netlify.app', // my hosted frontend
+  'http://localhost:5173'                    // local development
+];
+
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST", "DELETE", "PUT"]
   })
-)
+);
 
 // middleware
 app.use(express.json())
