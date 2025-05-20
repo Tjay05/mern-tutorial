@@ -14,7 +14,7 @@ export const useLogout = () => {
     // dispatch logout action
     dispatch({type: 'LOGOUT'});
     workoutsDispatch({type: 'SET_WORKOUTS', payload: null})
-    history('/login');
+    // history('/login');
   }
 
   return {logout};
