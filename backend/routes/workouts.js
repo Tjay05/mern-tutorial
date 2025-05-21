@@ -11,7 +11,8 @@ const {
 const router = express.Router();
 
 // require authentication for all workout routes
-router.use(requireAuth);
+// TEMPORALLY
+// router.use(requireAuth);
 
 // GET all workouts
 router.get('/', getWorkouts);
