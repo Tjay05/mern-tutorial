@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const UserOTPVerification = require('./userOtpVerificationModel');
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,11 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  verified: {
+    type: Boolean,
+    required: true,
+    default: false,
   }
 })
 
@@ -42,6 +48,39 @@ userSchema.statics.signup = async function(email, password) {
   const user = await this.create({ email, password: hash });
 
   return user
+}
+
+userSchema.statics.verifyOTP = async function(email, otp) {
+  if (!email || !otp) {
+    throw Error("Please fill in OTP fields");
+  } else {
+    const UserOTPVerificationRecords = await UserOTPVerification.find({
+      email,
+    });
+    if (UserOTPVerificationRecords.length <= 0) {
+      // No record found
+      throw new Error('Account record does not exist or has been verified already. Please sign up or log in.')
+    } else {
+      // Otp exists
+      const { expiresAt } = UserOTPVerificationRecords[0];
+      const hashedOTP = UserOTPVerificationRecords[0].otp;
+
+      if (expiresAt < Date.now()) {
+        await UserOTPVerification.deleteMany({ email });
+        throw new Error('The OTP has expired. Please request another one');
+      } else {
+        const validOTP = await bcrypt.compare(otp, hashedOTP);
+        if (!validOTP) {
+          throw new Error('Invalid otp, confirm the code in your inbox');
+        } else {
+          const user = await this.updateOne({ email }, { verified: true });
+          await UserOTPVerification.deleteMany({ email });
+          
+          return user;
+        }
+      }
+    }
+  }
 }
 
 // static login method
