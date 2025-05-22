@@ -13,25 +13,27 @@ const Signup = ({ onSent }) => {
   }
 
   return (
-    <form className="signup" onSubmit={handleSubmit}>
-      <h3>Sign Up</h3>
+    <form className="rule my-10 bg-white max-w-100 rounded-sm p-5" onSubmit={handleSubmit}>
+      <h3 className="text-center text-lg font-bold mb-6">Sign Up</h3>
 
-      <label>Email</label>
+      <label className="label">Email</label>
       <input
         type="email" 
         onChange={(e) => setEmail(e.target.value)}
         value={email}
+        className='input-field'
       />
-      <label>Password</label>
+      <label className="label">Password</label>
       <input
         type="password" 
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        className='input-field'
       />
 
-      {!isLoading && <button>Sign up</button>}
-      {isLoading && <button disabled>Signing up...</button>}
-      {error && <div className="error">{error}</div>}
+      {!isLoading && <button className="submit-btn">Sign up</button>}
+      {isLoading && <button disabled className="submit-btn">Signing up...</button>}
+      {error && <div className="warning">{error}</div>}
     </form>
   );
 }

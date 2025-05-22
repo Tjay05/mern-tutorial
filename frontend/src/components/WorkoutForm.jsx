@@ -48,35 +48,35 @@ const WorkoutForm = () => {
   }
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a New Workout</h3>
+    <form className="create lg:col-span-1" onSubmit={handleSubmit}>
+      <h3 className="">Add a New Workout</h3>
 
-      <label>Exercise Title:</label>
+      <label className="label">Exercise Title:</label>
       <input 
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title} 
-        className={emptyFields.includes('title') ? 'error' : ''}
+        className={emptyFields.includes('title') ? 'error input-field' : 'input-field'}
       />
 
-      <label>Load (in Kg):</label>
+      <label className="label">Load (in Kg):</label>
       <input 
         type="number"
         onChange={(e) => setLoad(e.target.value)}
         value={load} 
-        className={emptyFields.includes('load') ? 'error' : ''}
+        className={emptyFields.includes('load') ? 'error input-field' : 'input-field'}
       />
       
-      <label>Reps:</label>
+      <label className="label">Reps:</label>
       <input 
         type="number"
         onChange={(e) => setReps(e.target.value)}
         value={reps} 
-        className={emptyFields.includes('reps') ? 'error' : ''}
+        className={emptyFields.includes('reps') ? 'error input-field' : 'input-field'}
       />
 
-      <button>Add Workout</button>
-      {error && <div className="error">{error}</div>}
+      <button className="submit-btn">Add Workout</button>
+      {error && <div className="warning">{error}</div>}
     </form>
   );
 }

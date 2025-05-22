@@ -30,8 +30,8 @@ const Home = () => {
   }, [dispatch, user]);
 
   return (
-    <div className="home">
-      <div className="workouts">
+    <div className="grid grid-cols-1 lg:gap-10 lg:grid-cols-4">
+      <div className="workouts lg:col-span-3">
         {workouts && workouts.map((workout) => (
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
