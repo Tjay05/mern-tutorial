@@ -11,32 +11,32 @@ const Navbar = () => {
   }
   
   return (
-    <>
-      <header>
-        <div className="container">
-          <Link to='/'>
+    <div className=''>
+      <header className='bg-white'>
+        <div className="rule py-4 flex items-center justify-between lg:py-5">
+          <Link to='/' className='text-[#333] text-lg font-extrabold lg:text-2xl'>
             <h1>Workout Budyy</h1>
           </Link>
           <nav>
             {user && (
-              <div>
+              <div className='text-xs flex flex-col items-end lg:flex-row lg:items-center lg:text-lg'>
                 <span>{user.email}</span>
-                <button onClick={handleClick} >Log out</button>
+                <button onClick={handleClick} className='bg-white text-[#1aac83] border-[2px] cursor-pointer ml-4 px-2 py-1'>Log out</button>
               </div>
             )}
             {!user && (
-              <div>
-                <Link to='/login'>Login</Link>
-                <Link to='/signup'>Signup</Link>
+              <div className='text-xs'>
+                <Link to='/login' className='ml-2.5'>Login</Link>
+                <Link to='/signup' className='ml-2.5'>Signup</Link>
               </div>
             )}
           </nav>
         </div>
       </header>
-      <div className="pages">
+      <div className="pages rule py-5">
         <Outlet/>
       </div>
-    </>
+    </div>
   );
 }
  
