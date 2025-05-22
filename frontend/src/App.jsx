@@ -9,7 +9,9 @@ import {
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Register from './pages/Registeration';
+
+// Protected routes files
 import RequireAuth from './components/RequireAuth';
 import RedirectIfAuth from './components/RedirectIfAuth';
 
@@ -29,7 +31,7 @@ const router = createBrowserRouter(
         } />
         <Route path='signup' element={
           <RedirectIfAuth>
-            <Signup/>
+            <Register/>
           </RedirectIfAuth>
         } />
       </Route>
