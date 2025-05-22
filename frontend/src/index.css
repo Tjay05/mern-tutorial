@@ -1,8 +1,10 @@
 /* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
+@import "tailwindcss";
+
 /* layout */
-:root {
+/* :root {
   --primary: #1aac83;
   --error: #e7195a;
 }
@@ -32,7 +34,7 @@ header a {
   margin: 0 auto;
 }
 
-/* homepage */
+homepage
 .home {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -67,7 +69,7 @@ header a {
   color: #333;
 }
 
-/* new workout form */
+new workout form
 label, input {
   display: block;
 }
@@ -101,7 +103,7 @@ input.error {
   border: 1px solid var(--error);
 }
 
-/* navbar */
+navbar
 nav {
   display: flex;
   align-items: center;
@@ -121,11 +123,11 @@ nav button {
   margin-left: 10px;
 }
 
-/* auth forms */
+auth forms
 form.signup, form.login {
   max-width: 400px;
   margin: 40px auto;
   padding: 20px;
   background: #fff;
   border-radius: 4px;
-}
+} */
