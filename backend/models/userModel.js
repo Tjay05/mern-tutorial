@@ -73,8 +73,12 @@ userSchema.statics.verifyOTP = async function(email, otp) {
         if (!validOTP) {
           throw new Error('Invalid otp, confirm the code in your inbox');
         } else {
-          const user = await this.updateOne({ email }, { verified: true });
+          // mark as verified
+          await this.updateOne({ email }, { verified: true });
+          // delete otp records
           await UserOTPVerification.deleteMany({ email });
+
+          const user = await this.findOne({ email });
           
           return user;
         }
