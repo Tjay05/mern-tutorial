@@ -71,7 +71,7 @@ const signupUser = async (req, res) => {
         await newOTPVerification.save();
         await transporter.sendMail(mailOptions);
 
-        res.status(202).json({message: `Verification OTP sent to ${user.email}`, data: user.email})
+        res.status(200).json({message: `Verification OTP sent to ${user.email}`, data: user.email})
       } catch (error) {
         res.status(400).json({error: error.message})
       }
