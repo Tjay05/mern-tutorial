@@ -9,6 +9,7 @@ export const useVerifyOTP = () => {
 
   const verifyOTP = async (email, otp) => {
     setIsLoading(true);
+    setError(null);
 
     const response = await fetch('https://mern-tutorial-zpvg.onrender.com/api/user/verifyOtp', {
       method: 'POST',
