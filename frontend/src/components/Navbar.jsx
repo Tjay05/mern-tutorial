@@ -1,10 +1,12 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
+import { useModalContext } from '../hooks/UseModalContext';
 
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const { isModalOpen, setIsModalOpen } = useModalContext();
 
   const handleClick = () => {
     logout();
@@ -32,9 +34,10 @@ const Navbar = () => {
             )}
           </nav>
         </div>
+        <p onClick={() => setIsModalOpen(!isModalOpen)} className="text-right rule text-xs text-blue-700 underline italic pb-2 cursor-pointer lg:hidden">Click to add workout</p>
       </header>
       <div className="pages rule py-5">
-        <Outlet/>
+        <Outlet isModalOpen={isModalOpen}/>
       </div>
     </div>
   );
