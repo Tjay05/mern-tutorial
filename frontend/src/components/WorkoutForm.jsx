@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useModalContext } from "../hooks/UseModalContext";
+import { useModalContext } from "../hooks/useModalContext";
 import { useWorkoutsContext } from "../hooks/useWorkoutContext";
 
 const WorkoutForm = () => {

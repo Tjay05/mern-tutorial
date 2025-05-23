@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
-import { useModalContext } from '../hooks/UseModalContext';
+import { useModalContext } from '../hooks/useModalContext';
 
 const Navbar = () => {
   const { logout } = useLogout();
