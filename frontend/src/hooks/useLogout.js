@@ -5,7 +5,6 @@ import { useWorkoutsContext } from "./useWorkoutContext";
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
   const { dispatch: workoutsDispatch } = useWorkoutsContext();
-  const history = useNavigate();
 
   const logout = () => {
     // remove user from local storage
