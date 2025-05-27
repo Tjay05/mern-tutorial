@@ -1,7 +1,8 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-require('dotenv').config();
+const { v2: cloudinary } = require("cloudinary");
+
 const bcrypt = require('bcrypt');
 // mongodb user otp verification model
 const UserOTPVerification = require('../models/userOtpVerificationModel');
@@ -9,6 +10,14 @@ const UserOTPVerification = require('../models/userOtpVerificationModel');
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
+
+// cloudinary credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true
+})
 
 // Nodemailer credentials
 const transporter = nodemailer.createTransport({
@@ -150,4 +159,34 @@ const resendOtp = async (req, res) => {
 
 };
 
-module.exports = { loginUser, signupUser, verifyUser, resendOtp }
+const generateSignature = async (req, res) => {
+  const { folder } = req.body;
+
+  try {
+    const timestamp = Math.round((new Date).getTime() / 1000)
+
+    const signature = cloudinary.utils.api_sign_request({
+      timestamp,
+      folder
+    }, process.env.CLOUDINARY_API_SECRET);
+
+    res.status(200).json({ timestamp, signature });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const uploadProfilePic = async (req, res) => {
+  const { email, imgUrl } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    const picture = await user.updateOne({email}, {profilePic: imgUrl});
+    
+    res.status(200).json({ success: true, picture });
+  } catch (error) {
+    res.status(400).json({error: `This is the error ${error.message}`})
+  }
+}
+
+module.exports = { loginUser, signupUser, verifyUser, resendOtp, generateSignature, uploadProfilePic }

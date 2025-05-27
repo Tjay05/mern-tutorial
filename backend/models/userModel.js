@@ -15,6 +15,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  profilePic: {
+    type: String,
+  },
   verified: {
     type: Boolean,
     required: true,
@@ -108,5 +111,6 @@ userSchema.statics.login = async function(email, password) {
 
   return user;
 }
+
 
 module.exports = mongoose.model('User', userSchema);
