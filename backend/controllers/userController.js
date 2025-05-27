@@ -180,10 +180,17 @@ const uploadProfilePic = async (req, res) => {
   const { email, imgUrl } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    const picture = await user.updateOne({email}, {profilePic: imgUrl});
-    
-    res.status(200).json({ success: true, picture });
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { profilePic: imgUrl },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ success: true, picture: updatedUser.profilePic });
   } catch (error) {
     res.status(400).json({error: `This is the error ${error.message}`})
   }
