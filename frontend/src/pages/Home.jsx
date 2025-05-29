@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 // components
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
+import PictureForm from "../components/PicUpload";
 
 const Home = () => {
   const {workouts, dispatch} = useWorkoutsContext();
@@ -37,6 +38,7 @@ const Home = () => {
         ))}
       </div>
       <WorkoutForm/>
+      {/* <PictureForm/> */}
     </div>
   );
 }
