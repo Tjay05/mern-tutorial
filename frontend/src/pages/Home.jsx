@@ -9,7 +9,7 @@ import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
   const {workouts, dispatch} = useWorkoutsContext();
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
