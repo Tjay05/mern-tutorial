@@ -30,6 +30,37 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Function to send OTP verification email
+const sendOTPVerificationEmail = async (email, res) => {
+  try {
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL,
+      to: email,
+      subject: 'Verify Your Email',
+      html: `<p>Enter <b>${otp}</b> in the website to verify your email address and complete your signup</p>
+      <p>The code will <b>expire in 30 minutes</b>.</p>`
+    };
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedOTP = await bcrypt.hash(otp, salt);
+
+    const otpDoc = new UserOTPVerification({
+      email,
+      otp: hashedOTP,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 1800000, // 30 minutes
+    });
+
+    await otpDoc.save();
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: `Verification OTP sent to ${email}`, data: email });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // login user
 const loginUser = async (req, res) => {
   const {email, password} = req.body;
@@ -53,40 +84,7 @@ const signupUser = async (req, res) => {
   try {
     const user = await User.signup(email, password);
 
-    // send otp verification email
-    const sendOTPVerificationEmail = async () => {
-      try {
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-
-        // mail options
-        const mailOptions = {
-          from: process.env.AUTH_EMAIL,
-          to: user.email,
-          subject: 'Verify Your Email',
-          html: `<p>Enter <b>${otp}</b> in the website to verify your email address and complete your signup</p><p>The code will <b>expire in 30 minutes</b>.</p>`
-        };
-
-        // hash the otp
-        const salt = await bcrypt.genSalt(10);
-        const hashedOTP = await bcrypt.hash(otp, salt);
-
-        const newOTPVerification = await new UserOTPVerification({ 
-          email: user.email, 
-          otp: hashedOTP,
-          createdAt: Date.now(),
-          expiresAt: Date.now() + 1800000,
-        });
-        
-        await newOTPVerification.save();
-        await transporter.sendMail(mailOptions);
-
-        res.status(200).json({message: `Verification OTP sent to ${user.email}`, data: user.email})
-      } catch (error) {
-        res.status(400).json({error: error.message})
-      }
-    }
-
-    sendOTPVerificationEmail();
+    await sendOTPVerificationEmail(user.email, res);
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -112,47 +110,14 @@ const verifyUser = async (req, res) => {
 const resendOtp = async (req, res) => {
   const {email} = req.body;
 
-  try {
-    if (!email) {
-      throw Error("Unknown error, OYO NA YOUR CASE");
-    } else {
-      await UserOTPVerification.deleteMany({ email });
+  if (!email) {
+    return res.status(400).json({ error: "Unknown error, OYO NA YOUR CASE" });
+  }
 
-      // send otp verification email
-      const sendOTPVerificationEmail = async () => {
-        try {
-          const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-  
-          // mail options
-          const mailOptions = {
-            from: process.env.AUTH_EMAIL,
-            to: email,
-            subject: 'Verify Your Email',
-            html: `<p>Enter <b>${otp}</b> in the website to verify your email address and complete your signup</p><p>The code will <b>expire in 30 minutes</b>.</p>`
-          };
-  
-          // hash the otp
-          const salt = await bcrypt.genSalt(10);
-          const hashedOTP = await bcrypt.hash(otp, salt);
-  
-          const newOTPVerification = await new UserOTPVerification({ 
-            email, 
-            otp: hashedOTP,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 1800000,
-          });
-          
-          await newOTPVerification.save();
-          await transporter.sendMail(mailOptions);
-  
-          res.status(202).json({message: `Verification OTP sent to ${email}`, data: email})
-        } catch (error) {
-          res.status(400).json({error: error.message})
-        }
-      }
-  
-      sendOTPVerificationEmail();
-    }
+  try {
+    await UserOTPVerification.deleteMany({ email });
+
+    await sendOTPVerificationEmail(email, res);    
   } catch (error) {
     res.status(400).json({error: error.message});
   }
@@ -172,7 +137,7 @@ const generateSignature = async (req, res) => {
 
     res.status(200).json({ timestamp, signature });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error: error.message });
   }
 };
 
