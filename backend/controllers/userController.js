@@ -1,34 +1,16 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const { v2: cloudinary } = require("cloudinary");
-
 const bcrypt = require('bcrypt');
-// mongodb user otp verification model
+
 const UserOTPVerification = require('../models/userOtpVerificationModel');
+
+// External configs
+const cloudinary = require('../config/cloudinaryConfig');
+const transporter = require('../config/mailerConfig');
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
-
-// cloudinary credentials
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true
-})
-
-// Nodemailer credentials
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.AUTH_EMAIL,
-    pass: process.env.AUTH_PASS,
-  },
-});
 
 // Function to send OTP verification email
 const sendOTPVerificationEmail = async (email, res) => {
