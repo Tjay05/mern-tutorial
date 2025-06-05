@@ -8,7 +8,7 @@ import WorkoutForm from "../components/WorkoutForm";
 // import PictureForm from "../components/PicUpload";
 
 const Home = () => {
-  const {workouts, dispatch} = useWorkoutsContext();
+  const { workouts, dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
