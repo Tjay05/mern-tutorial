@@ -38,7 +38,6 @@ const Home = () => {
         ))}
       </div>
       <WorkoutForm/>
-      {/* <PictureForm/> */}
     </div>
   );
 }
