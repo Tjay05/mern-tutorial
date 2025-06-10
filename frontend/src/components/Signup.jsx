@@ -33,7 +33,7 @@ const Signup = ({ onSent }) => {
 
       {!isLoading && <button className="submit-btn">Sign up</button>}
       {isLoading && <button disabled className="submit-btn">Signing up...</button>}
-      {error && <div className="warning">{error}</div>}
+      {error && <div className="warning">{ error }</div>}
     </form>
   );
 }
