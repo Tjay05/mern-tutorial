@@ -11,7 +11,7 @@ export const useSignup = () => {
     const response = await fetch('https://mern-tutorial-zpvg.onrender.com/api/user/signup', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email,password})
+      body: JSON.stringify({ email, password })
     })
     const json = await response.json();
 
