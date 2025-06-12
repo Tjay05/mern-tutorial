@@ -14,7 +14,7 @@ export const useVerifyOTP = () => {
     const response = await fetch('https://mern-tutorial-zpvg.onrender.com/api/user/verifyOtp', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email, otp})
+      body: JSON.stringify({ email, otp })
     })
     const json = await response.json();
 
