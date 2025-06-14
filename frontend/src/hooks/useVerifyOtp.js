@@ -25,7 +25,6 @@ export const useVerifyOTP = () => {
     if (response.ok) {
       setMssg("Congratulations! your account has been verified successfully, kindly wait as your account is being prepared");
       setTimeout(() => {
-        // save the user to local storage
         localStorage.setItem('user', JSON.stringify(json));
         
         // update the authContext
