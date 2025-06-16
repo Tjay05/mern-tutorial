@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./useAuthContext";
 import { useWorkoutsContext } from "./useWorkoutContext";
 
