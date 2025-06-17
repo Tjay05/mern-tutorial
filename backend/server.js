@@ -50,4 +50,3 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => {
     console.log("did not work due to this " + error);
   })
-
