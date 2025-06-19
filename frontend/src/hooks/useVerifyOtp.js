@@ -23,7 +23,7 @@ export const useVerifyOTP = () => {
       setError(json.error);
     }
     if (response.ok) {
-      setMssg("Congratulations! your account has been verified successfully, kindly wait as your account is being prepared");
+      setMssg("Congratulations! your account has been verified, kindly wait as your account is being prepared");
       setTimeout(() => {
         localStorage.setItem('user', JSON.stringify(json));
         
