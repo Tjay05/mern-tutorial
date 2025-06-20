@@ -10,7 +10,7 @@ const userRoutes = require('./routes/user');
 const app = express();
 
 const allowedOrigins = [
-  'https://mern-workout-budyy.netlify.app', // my hosted frontend
+  'https://mern-workout-budyy.netlify.app', // hosted frontend
   'http://localhost:5173'                    // local development
 ];
 
