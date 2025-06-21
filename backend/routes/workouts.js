@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-// require authentication for all workout routes
+// require authentication for every workout route
 router.use(requireAuth);
 
 // GET all workouts
