@@ -37,6 +37,9 @@ const sendOTPVerificationEmail = async (email, res) => {
     await otpDoc.save();
     await transporter.sendMail(mailOptions);
 
+    // To be removed
+    console.log('email sent');
+
     res.status(200).json({ message: `Verification OTP sent to ${email}`, data: email });
   } catch (error) {
     res.status(400).json({ error: error.message });
