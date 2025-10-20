@@ -35,6 +35,10 @@ const sendOTPVerificationEmail = async (email, res) => {
     });
 
     await otpDoc.save();
+
+    // to be removed
+    console.log('otp doc saved');
+
     await transporter.sendMail(mailOptions);
 
     // To be removed
