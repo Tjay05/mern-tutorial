@@ -7,7 +7,7 @@ const UserOTPVerification = require('../models/userOtpVerificationModel');
 
 // External configs
 const cloudinary = require('../config/cloudinaryConfig');
-const transporter = require('../config/mailerConfig');
+const createTransporter = require('../config/mailerConfig');
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -16,6 +16,8 @@ const createToken = (_id) => {
 // Function to send OTP verification email
 const sendOTPVerificationEmail = async (email, res) => {
   try {
+    const transporter = await createTransporter();
+
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailOptions = {
       from: process.env.AUTH_EMAIL,
@@ -37,13 +39,10 @@ const sendOTPVerificationEmail = async (email, res) => {
 
     await otpDoc.save();
 
-    // to be removed
-    console.log('otp doc saved');
-
     await transporter.sendMail(mailOptions);
 
     // To be removed
-    console.log('email sent');
+    console.log(`Otp sent to ${email}`);
 
     res.status(200).json({ message: `Verification OTP sent to ${email}`, data: email });
   } catch (error) {
