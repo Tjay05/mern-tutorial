@@ -13,17 +13,21 @@ const Home = () => {
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('https://mern-tutorial-zpvg.onrender.com/api/workouts', {
-        headers: {
-          'Authorization': `Bearer ${user.token}`
-        }
-      });
-      const json = await response.json();
+      try {
+        const response = await fetch('https://mern-tutorial-zpvg.onrender.com/api/workouts', {
+          headers: {
+            'Authorization': `Bearer ${user.token}`
+          }
+        });
+        const json = await response.json();
 
-      if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
+        if (response.ok) {
+          dispatch({type: 'SET_WORKOUTS', payload: json})
+        }
+      } catch (error) {
+          console.error('E no go work:', error);
+        }
       }
-    }
 
     if (user) {
       fetchWorkouts();
@@ -37,7 +41,7 @@ const Home = () => {
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
-      {/* <WorkoutForm/> */}
+      <WorkoutForm/>
     </div>
   );
 }
