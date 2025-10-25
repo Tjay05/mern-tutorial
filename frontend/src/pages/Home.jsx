@@ -41,6 +41,7 @@ const Home = () => {
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
+      {/* Workout form */}
       <WorkoutForm/>
     </div>
   );
